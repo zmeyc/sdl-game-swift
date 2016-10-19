@@ -1,0 +1,5 @@
+module CSDL2 [system] {
+    umbrella header "include/shim.h"
+    link "SDL2"
+    export *
+}

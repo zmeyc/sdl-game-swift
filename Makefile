@@ -23,7 +23,7 @@ sdl-macos: ThirdParty/SDL
 	(cd ThirdParty/SDL/build-osx; ../configure --prefix="$(SDL_PREFIX)"; make; make install)
 
 xcodeproj:
-	swift package generate-xcodeproj
+	swift package generate-xcodeproj $(SWIFT_FLAGS)
 
 ThirdParty/SDL:
 	mkdir -p ThirdParty

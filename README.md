@@ -73,7 +73,7 @@ Add to `Header Search Paths`:
 Add to `Import Paths`:
  * $(SRCROOT)/Sources/CSDL2
 
-Select `Game-ios/AppDelegate.swift` -> Target Membership. Uncheck `Game-ios` target.
+Select `Game-ios/AppDelegate.swift` -> Target Membership. Uncheck `Game-ios` target or simply delete this file, it won't be used.
 
 Select `Sources/Game/Game.swift` -> Target Membership. Check `Game-ios` target.
 

@@ -25,17 +25,12 @@ make xcodeproj
 open Game.xcodeproj
 ```
 
-Select Scheme `Main` -> `My Mac`.
+Select Scheme `Game` -> `My Mac`. There are two schemes with the same name, you need the bottom one (with black icon).
 
 Select `Targets` -> `Game` -> `Build Settings`.
 
 Add to `Header Search Paths`:
  * $(SRCROOT)/ThirdParty/SDL/include
-
-Add to `Import Paths`:
- * $(SRCROOT)/Sources/CSDL2
-
-Select `Targets` -> `Main` -> `Build Settings`.
 
 Add to `Import Paths`:
  * $(SRCROOT)/Sources/CSDL2
@@ -76,7 +71,7 @@ Add to `Import Paths`:
 
 Select `Game-ios/AppDelegate.swift` -> Target Membership. Uncheck `Game-ios` target or simply delete this file, it won't be used.
 
-Select `Sources/Game/Game.swift` -> Target Membership. Check `Game-ios` target.
+Add `Sources/Game/*.swift` except `main.swift` to `Game-ios` target. `main.swift` is not needed on iOS because SDL implements it's own main() on this platform.
 
 ### Windows (Cygwin)
 

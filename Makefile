@@ -5,7 +5,7 @@ ifneq ($(findstring CYGWIN,$(UNAME)),)
 endif
 
 ifeq ($(UNAME), Darwin)
-SDL_PREFIX = $(shell pwd)/libroot/osx
+SDL_PREFIX = $(shell pwd)/libroot/macos
 SWIFT_FLAGS = -Xcc -I"$(SDL_PREFIX)/include/SDL2" -Xcc -I/usr/X11R6/include -Xcc -D_THREAD_SAFE \
 			  -Xlinker -L"$(SDL_PREFIX)/lib" -Xlinker -lSDL2
 endif
@@ -18,11 +18,12 @@ build:
 	swift build $(SWIFT_FLAGS)
 
 sdl-macos: ThirdParty/SDL
-	rm -rf ThirdParty/SDL/build-osx
-	mkdir -p ThirdParty/SDL/build-osx
-	(cd ThirdParty/SDL/build-osx; ../configure --prefix="$(SDL_PREFIX)"; make; make install)
+	rm -rf ThirdParty/SDL/build-macos
+	mkdir -p ThirdParty/SDL/build-macos
+	(cd ThirdParty/SDL/build-macos; ../configure --prefix="$(SDL_PREFIX)"; make; make install)
 
 xcodeproj:
+	mkdir -p "$(SDL_PREFIX)"
 	swift package generate-xcodeproj $(SWIFT_FLAGS)
 
 ThirdParty/SDL:

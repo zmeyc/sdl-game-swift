@@ -9,8 +9,5 @@ let package = Package(
         Target(
             name: "Game",
             dependencies: ["CSDL2"]),
-        Target(
-            name: "Main",
-            dependencies: ["Game"]),
     ]
 )

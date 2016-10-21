@@ -4,6 +4,7 @@ A template project for making games with SDL and Swift on the following platform
  * Mac OS X (console)
  * Mac OS X (Xcode)
  * iOS (Xcode)
+ * Windows (Cygwin)
 
 ## Building on different platforms
 

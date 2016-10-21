@@ -77,9 +77,44 @@ Select `Game-ios/AppDelegate.swift` -> Target Membership. Uncheck `Game-ios` tar
 
 Select `Sources/Game/Game.swift` -> Target Membership. Check `Game-ios` target.
 
+### Windows (Cygwin)
+
+Install Cygwin 64-bit by running `cygwin_setup.bat`. Choose default packages and default destination directory: `C:\cygwin64`.
+
+Install development tools by running `cygwin_install_tools.bat`.
+
+Install Swift prerequisites by running `cygwin_install_swift_prerequisites.bat`.
+
+In `Computer` -> `Advanced System Settings` -> `Environment Variables`, add Cygwin to PATH and restart the shell:
+
+```bash
+set PATH=%PATH%;C:\cygwin64\bin
+```
+
+Now `make` should become available. Install Swift:
+
+```bash
+make install-swift
+```
+
+Add Swift to PATH, then restart the shell. Replace `User` with your system account name and verify that this directory actually exists.
+
+```bash
+set PATH=%PATH%;C:\cygwin64\bin;C:\cygwin64\home\User\swift\bin
+```
+
+Build SDL and game:
+
+```bash
+make sdl-cygwin
+make
+```
+
 ## Customization
 
 By default, latest SDL2 version from default branch of official repository will be used. You can use a custom version of SDL by putting it into `ThirdParty/SDL/` directory prior to calling `make sdl-platformname`.
+
+Calling `make` without arguments defaults to debug build: `make build-debug`. To produce a release build, call `make build-release`.
 
 ## License
 

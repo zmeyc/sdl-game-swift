@@ -26,13 +26,16 @@ open Game.xcodeproj
 
 Select Scheme `Main` -> `My Mac`.
 
-Select `Targets` -> `Game` -> `Build Settings`.<br />
+Select `Targets` -> `Game` -> `Build Settings`.
+
 Add to `Header Search Paths`:
  * $(SRCROOT)/ThirdParty/SDL/include
+
 Add to 'Import Paths':
  * $(SRCROOT)/Sources/CSDL2
 
-Select `Targets` -> `Main` -> `Build Settings`.<br />
+Select `Targets` -> `Main` -> `Build Settings`.
+
 Add to 'Import Paths':
  * $(SRCROOT)/Sources/CSDL2
 
@@ -53,7 +56,8 @@ Select Scheme `Game-ios` -> `iPhone 5` (or any other simulator).
 
 In Finder, locate `ThirdParty/SDL/Xcode-iOS/SDL/SDL.xcodeproj` and drag it into Game-ios folder in your Xcode project.
 
-Select `Targets` -> `Game-ios` -> `General`.<br />
+Select `Targets` -> `Game-ios` -> `General`.
+
 Add to `Linked Frameworks and Libraries`:
   * libSDL2.a from 'libSDL' target in 'SDL' project
   * AVFoundation.framework
@@ -61,9 +65,11 @@ Add to `Linked Frameworks and Libraries`:
   * CoreMotion.framework
   * GameController.framework
 
-Select `Targets` -> `Game-ios` -> `Build Settings`.<br />
+Select `Targets` -> `Game-ios` -> `Build Settings`.
+
 Add to `Header Search Paths`:
  * $(SRCROOT)/ThirdParty/SDL/include
+
 Add to 'Import Paths':
  * $(SRCROOT)/Sources/CSDL2
 

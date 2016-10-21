@@ -1,8 +1,9 @@
 # sdl-game-swift
 
-Work in progress, do not use!
-
-A template project for making games with SDL and Swift on all supported platforms.
+A template project for making games with SDL and Swift on the following platforms:
+ * Mac OS X (console)
+ * Mac OS X (Xcode)
+ * iOS (Xcode)
 
 ## Building on different platforms
 
@@ -25,13 +26,13 @@ open Game.xcodeproj
 
 Select Scheme `Main` -> `My Mac`.
 
-Select `Targets` -> `Game` -> `Build Settings`.
+Select `Targets` -> `Game` -> `Build Settings`.<br />
 Add to `Header Search Paths`:
  * $(SRCROOT)/ThirdParty/SDL/include
 Add to 'Import Paths':
  * $(SRCROOT)/Sources/CSDL2
 
-Select `Targets` -> `Main` -> `Build Settings`.
+Select `Targets` -> `Main` -> `Build Settings`.<br />
 Add to 'Import Paths':
  * $(SRCROOT)/Sources/CSDL2
 
@@ -48,11 +49,11 @@ make xcodeproj
  * Choose a product name, for example: `Game-ios`
  * Leave everything else as is.
 
-Select Sceheme `Game-ios` -> `iPhone 5` (or any other simulator).
+Select Scheme `Game-ios` -> `iPhone 5` (or any other simulator).
 
 In Finder, locate `ThirdParty/SDL/Xcode-iOS/SDL/SDL.xcodeproj` and drag it into Game-ios folder in your Xcode project.
 
-Select `Targets` -> `Game-ios` -> `General`.
+Select `Targets` -> `Game-ios` -> `General`.<br />
 Add to `Linked Frameworks and Libraries`:
   * libSDL2.a from 'libSDL' target in 'SDL' project
   * AVFoundation.framework
@@ -60,7 +61,7 @@ Add to `Linked Frameworks and Libraries`:
   * CoreMotion.framework
   * GameController.framework
 
-Select `Targets` -> `Game-ios` -> `Build Settings`.
+Select `Targets` -> `Game-ios` -> `Build Settings`.<br />
 Add to `Header Search Paths`:
  * $(SRCROOT)/ThirdParty/SDL/include
 Add to 'Import Paths':

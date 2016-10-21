@@ -5,15 +5,15 @@ ifneq ($(findstring CYGWIN,$(UNAME)),)
 endif
 
 ifeq ($(UNAME), Darwin)
-SDL_PREFIX = $(shell pwd)/libroot/macos
-SWIFT_FLAGS = -Xcc -I"$(SDL_PREFIX)/include/SDL2" -Xcc -I/usr/X11R6/include -Xcc -D_THREAD_SAFE \
-			  -Xlinker -L"$(SDL_PREFIX)/lib" -Xlinker -lSDL2
+PREFIX = $(shell pwd)/libroot/macos
+SWIFT_FLAGS = -Xcc -I"$(PREFIX)/include/SDL2" -Xcc -I/usr/X11R6/include -Xcc -D_THREAD_SAFE \
+			  -Xlinker -L"$(PREFIX)/lib" -Xlinker -lSDL2
 endif
 
 ifeq ($(UNAME), CYGWIN)
-SDL_PREFIX = $(shell pwd)/libroot/cygwin
-SWIFT_FLAGS = -Xcc -I"$(SDL_PREFIX)/include/SDL2" \
-			  -Xlinker -L"$(SDL_PREFIX)/lib" -Xlinker -lSDL2
+PREFIX = $(shell pwd)/libroot/cygwin
+SWIFT_FLAGS = -Xcc -I"$(PREFIX)/include/SDL2" \
+			  -Xlinker -L"$(PREFIX)/lib" -Xlinker -lSDL2
 endif
 
 all: build-debug
@@ -27,18 +27,22 @@ build-release: copy-sdl-release
 	swift build -c release $(SWIFT_FLAGS)
 
 xcodeproj:
-	mkdir -p "$(SDL_PREFIX)"
+	mkdir -p "$(PREFIX)"
 	swift package generate-xcodeproj $(SWIFT_FLAGS)
 
 ThirdParty/SDL:
 	mkdir -p ThirdParty
 	(cd ThirdParty; hg clone http://hg.libsdl.org/SDL)
 
+ThirdParty/sdl-gpu:
+	mkdir -p ThirdParty
+	(cd ThirdParty; git clone https://github.com/grimfang4/sdl-gpu.git)
+
 ifeq ($(UNAME), Darwin)
 sdl-macos: ThirdParty/SDL
 	rm -rf ThirdParty/SDL/build-macos
 	mkdir -p ThirdParty/SDL/build-macos
-	(cd ThirdParty/SDL/build-macos; ../configure --prefix="$(SDL_PREFIX)"; make; make install)
+	(cd ThirdParty/SDL/build-macos; ../configure --prefix="$(PREFIX)"; make; make install)
 endif
 
 ifeq ($(UNAME), CYGWIN)
@@ -49,17 +53,22 @@ install-swift:
 sdl-cygwin: ThirdParty/SDL
 	rm -rf ThirdParty/SDL/build-cygwin
 	mkdir -p ThirdParty/SDL/build-cygwin
-	(cd ThirdParty/SDL/build-cygwin; ../configure --prefix="$(SDL_PREFIX)"; make; make install)
+	(cd ThirdParty/SDL/build-cygwin; ../configure --prefix="$(PREFIX)"; make; make install)
+
+sdl-gpu-cygwin: ThirdParty/sdl-gpu
+	rm -rf ThirdParty/sdl-gpu/build-cygwin
+	mkdir -p ThirdParty/sdl-gpu/build-cygwin
+	(cd ThirdParty/sdl-gpu/build-cygwin; cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$(PREFIX)" ..; make; make install)
 
 copy-sdl-debug: .build/debug/SDL2.dll
 .build/debug/SDL2.dll:
 	mkdir -p .build/debug
-	cp "$(SDL_PREFIX)/bin/SDL2.dll" .build/debug/
+	cp "$(PREFIX)/bin/SDL2.dll" .build/debug/
 
 copy-sdl-release: .build/release/SDL2.dll
 .build/release/SDL2.dll:
 	mkdir -p .build/release
-	cp "$(SDL_PREFIX)/bin/SDL2.dll" .build/release/
+	cp "$(PREFIX)/bin/SDL2.dll" .build/release/
 endif
 
 clean:

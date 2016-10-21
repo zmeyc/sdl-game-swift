@@ -31,12 +31,12 @@ Select `Targets` -> `Game` -> `Build Settings`.
 Add to `Header Search Paths`:
  * $(SRCROOT)/ThirdParty/SDL/include
 
-Add to 'Import Paths':
+Add to `Import Paths`:
  * $(SRCROOT)/Sources/CSDL2
 
 Select `Targets` -> `Main` -> `Build Settings`.
 
-Add to 'Import Paths':
+Add to `Import Paths`:
  * $(SRCROOT)/Sources/CSDL2
 
 ### iOS (Xcode)
@@ -70,7 +70,7 @@ Select `Targets` -> `Game-ios` -> `Build Settings`.
 Add to `Header Search Paths`:
  * $(SRCROOT)/ThirdParty/SDL/include
 
-Add to 'Import Paths':
+Add to `Import Paths`:
  * $(SRCROOT)/Sources/CSDL2
 
 Select `Game-ios/AppDelegate.swift` -> Target Membership. Uncheck `Game-ios` target.

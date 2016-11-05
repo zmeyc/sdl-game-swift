@@ -101,10 +101,11 @@ Add Swift to PATH, then restart the shell. Replace `User` with your system accou
 set PATH=%PATH%;C:\cygwin64\bin;C:\cygwin64\home\User\swift\bin
 ```
 
-Build SDL and game:
+Build SDL, sdl-gpu and game:
 
 ```bash
 make sdl-cygwin
+make sdl-gpu-cygwin
 make
 ```
 

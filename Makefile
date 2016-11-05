@@ -14,17 +14,17 @@ endif
 
 ifeq ($(UNAME), CYGWIN)
 PREFIX = $(shell pwd)/libroot/cygwin
-SWIFT_FLAGS = -Xcc -I"$(PREFIX)/include/SDL2" \
-			  -Xlinker -L"$(PREFIX)/lib" -Xlinker -lSDL2
+SWIFT_FLAGS = -Xcc -I"$(PREFIX)/include/SDL2" -Xcc -I"$(PREFIX)/include/SDL" \
+			  -Xlinker -L"$(PREFIX)/lib" -Xlinker -lSDL2 -Xlinker -lSDL2_gpu
 endif
 
 all: build-debug
 
-build-debug: copy-sdl-debug
+build-debug: copy-sdl-debug copy-sdl-gpu-debug
 	@echo "Compiling for $(UNAME) (DEBUG)"
 	swift build -c debug $(SWIFT_FLAGS)
 
-build-release: copy-sdl-release
+build-release: copy-sdl-release copy-sdl-gpu-release
 	@echo "Compiling for $(UNAME) (RELEASE)"
 	swift build -c release $(SWIFT_FLAGS)
 
@@ -65,7 +65,7 @@ sdl-cygwin: ThirdParty/SDL
 sdl-gpu-cygwin: ThirdParty/sdl-gpu
 	rm -rf ThirdParty/sdl-gpu/build-cygwin
 	mkdir -p ThirdParty/sdl-gpu/build-cygwin
-	(cd ThirdParty/sdl-gpu/build-cygwin; cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$(PREFIX)" ..; make; make install)
+	(cd ThirdParty/sdl-gpu/build-cygwin; cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$(PREFIX)" -DCMAKE_LEGACY_CYGWIN_WIN32=1 -DCMAKE_C_FLAGS="-D_WIN32" -DSDL_gpu_BUILD_DEMOS=OFF ..; make; make install)
 
 copy-sdl-debug: .build/debug/SDL2.dll
 .build/debug/SDL2.dll:
@@ -76,6 +76,16 @@ copy-sdl-release: .build/release/SDL2.dll
 .build/release/SDL2.dll:
 	mkdir -p .build/release
 	cp "$(PREFIX)/bin/SDL2.dll" .build/release/
+
+copy-sdl-gpu-debug: .build/debug/cygSDL2_gpu.dll
+.build/debug/cygSDL2_gpu.dll:
+	mkdir -p .build/debug
+	cp "$(PREFIX)/lib/cygSDL2_gpu.dll" .build/debug/
+
+copy-sdl-gpu-release: .build/release/cygSDL2_gpu.dll
+.build/release/cygSDL2_gpu.dll:
+	mkdir -p .build/release
+	cp "$(PREFIX)/lib/cygSDL2_gpu.dll" .build/release/
 endif
 
 clean:
@@ -84,4 +94,4 @@ clean:
 distclean: clean
 	rm -rf libroot ThirdParty/SDL
 
-.PHONY: all build-debug build-release copy-sdl-debug copy-sdl-release sdl-macos sdl-gpu-macos sdl-cygwin sdl-gpu-cygwin xcodeproj clean distclean
+.PHONY: all build-debug build-release copy-sdl-debug copy-sdl-release copy-sdl-gpu-debug copy-sdl-gpu-release sdl-macos sdl-gpu-macos sdl-cygwin sdl-gpu-cygwin xcodeproj clean distclean

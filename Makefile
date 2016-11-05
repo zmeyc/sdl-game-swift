@@ -5,9 +5,11 @@ ifneq ($(findstring CYGWIN,$(UNAME)),)
 endif
 
 ifeq ($(UNAME), Darwin)
+# 10.10 is hardcoded in SPM
+export MACOSX_DEPLOYMENT_TARGET=10.10
 PREFIX = $(shell pwd)/libroot/macos
-SWIFT_FLAGS = -Xcc -I"$(PREFIX)/include/SDL2" -Xcc -I/usr/X11R6/include -Xcc -D_THREAD_SAFE \
-			  -Xlinker -L"$(PREFIX)/lib" -Xlinker -lSDL2
+SWIFT_FLAGS = -Xcc -I"$(PREFIX)/include/SDL2" -Xcc -I"$(PREFIX)/include/SDL" -Xcc -I/usr/X11R6/include -Xcc -D_THREAD_SAFE \
+			  -Xlinker -L"$(PREFIX)/lib" -Xlinker -lSDL2 -Xlinker -lSDL2_gpu -Xlinker -framework -Xlinker OpenGL
 endif
 
 ifeq ($(UNAME), CYGWIN)
@@ -43,6 +45,11 @@ sdl-macos: ThirdParty/SDL
 	rm -rf ThirdParty/SDL/build-macos
 	mkdir -p ThirdParty/SDL/build-macos
 	(cd ThirdParty/SDL/build-macos; ../configure --prefix="$(PREFIX)"; make; make install)
+
+sdl-gpu-macos: ThirdParty/sdl-gpu
+	rm -rf ThirdParty/sdl-gpu/build-macos
+	mkdir -p ThirdParty/sdl-gpu/build-macos
+	(cd ThirdParty/sdl-gpu/build-macos; cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$(PREFIX)" ..; make; make install)
 endif
 
 ifeq ($(UNAME), CYGWIN)
@@ -77,4 +84,4 @@ clean:
 distclean: clean
 	rm -rf libroot ThirdParty/SDL
 
-.PHONY: all build-debug build-release copy-sdl-debug copy-sdl-release sdl-macos sdl-cygwin xcodeproj clean distclean
+.PHONY: all build-debug build-release copy-sdl-debug copy-sdl-release sdl-macos sdl-gpu-macos sdl-cygwin sdl-gpu-cygwin xcodeproj clean distclean

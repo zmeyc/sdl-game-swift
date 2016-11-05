@@ -1,4 +1,5 @@
-import CSDL2
+//import CSDL2
+import CSDLgpu
 
 // Game coordinates
 let gameWidth: Int32 = 768
@@ -8,7 +9,22 @@ let gameHeight: Int32 = 1024
 let windowWidth: Int32 = 768 / 2
 let windowHeight: Int32 = 1024 / 2
 
+let useSDLgpu = true
+
 public func gameMain() -> Int32 {
+    switch useSDLgpu {
+    case true: return gameMainSDLgpu()
+    case false: return gameMainSDL2()
+    }
+}
+
+func gameMainSDLgpu() -> Int32 {
+    let screen = GPU_Init(UInt16(windowWidth), UInt16(windowHeight), UInt32(GPU_DEFAULT_INIT_FLAGS))
+    print("Hello SDL-gpu!")
+    return 0
+}
+
+func gameMainSDL2() -> Int32 {
     print("Hello SDL!")
     
     guard 0 == SDL_Init(UInt32(SDL_INIT_VIDEO)) else {
@@ -21,8 +37,8 @@ public func gameMain() -> Int32 {
     var displayMode = SDL_DisplayMode()
     if 0 == SDL_GetCurrentDisplayMode(0, &displayMode) {
         print("SDL_GetCurrentDisplayMode: \(displayMode.w)x\(displayMode.h), \(displayMode.refresh_rate) hz")
-        windowRect.w = displayMode.w
-        windowRect.h = displayMode.h
+        //windowRect.w = displayMode.w
+        //windowRect.h = displayMode.h
     }
 
     guard let window = SDL_CreateWindow("Game",

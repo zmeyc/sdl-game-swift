@@ -14,6 +14,7 @@ Prerequisites: Xcode 8.
 
 ```bash
 make sdl-macos
+make sdl-gpu-macos
 make
 ```
 
@@ -21,6 +22,7 @@ make
 
 ```bash
 make sdl-macos
+make sdl-gpu-macos
 make xcodeproj
 open Game.xcodeproj
 ```

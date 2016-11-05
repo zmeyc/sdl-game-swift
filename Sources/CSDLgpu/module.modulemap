@@ -1,0 +1,5 @@
+module CSDLgpu [system] {
+    umbrella header "include/shim.h"
+    link "SDL2_gpu"
+    export *
+}

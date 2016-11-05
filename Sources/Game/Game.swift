@@ -19,8 +19,40 @@ public func gameMain() -> Int32 {
 }
 
 func gameMainSDLgpu() -> Int32 {
-    let screen = GPU_Init(UInt16(windowWidth), UInt16(windowHeight), UInt32(GPU_DEFAULT_INIT_FLAGS))
     print("Hello SDL-gpu!")
+    
+    guard let screen = GPU_Init(UInt16(windowWidth), UInt16(windowHeight), UInt32(GPU_DEFAULT_INIT_FLAGS)) else {
+        print("Unable to initialize GPU")
+        return 1
+    }
+    defer { GPU_Quit() }
+    
+    var done = false
+    var event = SDL_Event()
+    while !done {
+        while 0 != SDL_PollEvent(&event) {
+            switch SDL_EventType(event.type) {
+            case SDL_QUIT:
+                done = true
+            case SDL_KEYDOWN:
+                if Int(event.key.keysym.sym) == SDLK_ESCAPE {
+                    done = true
+                }
+            default:
+                break
+            }
+        }
+        
+        // Update logic here
+        
+        //GPU_Clear(screen);
+        GPU_ClearRGB(screen, 255, 0, 0)
+        
+        // Draw here
+        
+        GPU_Flip(screen);
+    }
+    
     return 0
 }
 
@@ -69,13 +101,21 @@ func gameMainSDL2() -> Int32 {
             switch SDL_EventType(event.type) {
             case SDL_QUIT:
                 done = true
+            case SDL_KEYDOWN:
+                if Int(event.key.keysym.sym) == SDLK_ESCAPE {
+                    done = true
+                }
             default:
                 break
             }
         }
         
+        // Update logic here
+        
         SDL_RenderClear(renderer)
 
+        // Draw here
+        
         SDL_RenderPresent(renderer)
     }
             

@@ -33,9 +33,11 @@ Select `Targets` -> `Game` -> `Build Settings`.
 
 Add to `Header Search Paths`:
  * $(SRCROOT)/ThirdParty/SDL/include
+ * $(SRCROOT)/ThirdParty/sdl-gpu/include
 
 Add to `Import Paths`:
  * $(SRCROOT)/Sources/CSDL2
+ * $(SRCROOT)/Sources/CSDLgpu
 
 ### iOS (Xcode)
 

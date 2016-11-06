@@ -68,24 +68,24 @@ sdl-gpu-cygwin: ThirdParty/sdl-gpu
 	(cd ThirdParty/sdl-gpu/build-cygwin; cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$(PREFIX)" -DCMAKE_LEGACY_CYGWIN_WIN32=1 -DCMAKE_C_FLAGS="-D_WIN32" -DSDL_gpu_BUILD_DEMOS=OFF ..; make; make install)
 
 copy-sdl-debug: .build/debug/SDL2.dll
-.build/debug/SDL2.dll:
+.build/debug/SDL2.dll: $(PREFIX)/bin/SDL2.dll
 	mkdir -p .build/debug
-	cp "$(PREFIX)/bin/SDL2.dll" .build/debug/
+	cp "$<" .build/debug/
 
 copy-sdl-release: .build/release/SDL2.dll
-.build/release/SDL2.dll:
+.build/release/SDL2.dll: $(PREFIX)/bin/SDL2.dll
 	mkdir -p .build/release
-	cp "$(PREFIX)/bin/SDL2.dll" .build/release/
+	cp "$<" .build/release/
 
 copy-sdl-gpu-debug: .build/debug/cygSDL2_gpu.dll
-.build/debug/cygSDL2_gpu.dll:
+.build/debug/cygSDL2_gpu.dll: $(PREFIX)/lib/cygSDL2_gpu.dll
 	mkdir -p .build/debug
-	cp "$(PREFIX)/lib/cygSDL2_gpu.dll" .build/debug/
+	cp "$<" .build/debug/
 
 copy-sdl-gpu-release: .build/release/cygSDL2_gpu.dll
-.build/release/cygSDL2_gpu.dll:
+.build/release/cygSDL2_gpu.dll: $(PREFIX)/lib/cygSDL2_gpu.dll
 	mkdir -p .build/release
-	cp "$(PREFIX)/lib/cygSDL2_gpu.dll" .build/release/
+	cp "$<" .build/release/
 endif
 
 clean:

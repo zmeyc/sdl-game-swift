@@ -91,7 +91,8 @@ endif
 clean:
 	swift build --clean
 
-distclean: clean
-	rm -rf libroot ThirdParty/SDL
+distclean:
+	swift build --clean dist
+	rm -rf libroot ThirdParty/SDL ThirdParty/sdl-gpu
 
 .PHONY: all build-debug build-release copy-sdl-debug copy-sdl-release copy-sdl-gpu-debug copy-sdl-gpu-release sdl-macos sdl-gpu-macos sdl-cygwin sdl-gpu-cygwin xcodeproj clean distclean
